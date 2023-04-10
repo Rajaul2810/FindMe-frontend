@@ -1,9 +1,10 @@
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import * as Animatable from 'react-native-animatable';
 import { Image } from 'react-native';
 import COLORS from '../Constant/colors';
+import { AuthContext } from '../Context/UserContext';
 
 
 const SignUp = ({ navigation }) => {
@@ -63,6 +64,8 @@ const SignUp = ({ navigation }) => {
       secureTextEntry: !data.secureTextEntry
     })
   }
+  // context data
+  const { loading, register, userInfo } = useContext(AuthContext);
   return (
     <SafeAreaView style={{flex:1}}>
       {/* <ScrollView > */}
@@ -87,7 +90,7 @@ const SignUp = ({ navigation }) => {
               onChangeText={(val) => onChangeName(val)}
               placeholder="Name"
               name="name"
-              require
+              
             />
             {data.check_name ?
               <Animatable.Text style={styles.icon2} animation="bounceIn"> <Feather name="check-circle" size={24} color="green" /></Animatable.Text>
@@ -105,7 +108,7 @@ const SignUp = ({ navigation }) => {
               onChangeText={(val) => onChangeText(val)}
               placeholder="Email"
               name="email"
-              require
+              
             />
             {data.check_textInputChange ?
               <Animatable.Text style={styles.icon2} animation="bounceIn"> <Feather name="check-circle" size={24} color="green" /></Animatable.Text>
@@ -135,7 +138,7 @@ const SignUp = ({ navigation }) => {
             </TouchableOpacity>
 
           </View>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity onPress={()=> register(data.name,data.email,data.password)} style={styles.btn}>
             <Text style={styles.btnText}>SIGN UP</Text>
           </TouchableOpacity>
 

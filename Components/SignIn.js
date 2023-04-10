@@ -1,8 +1,9 @@
 import { View, Text, StyleSheet, Image, TextInput, Alert, Pressable, TouchableOpacity, ScrollView } from 'react-native'
 import COLORS from '../Constant/colors'
 import { AntDesign, Entypo, Feather } from '@expo/vector-icons';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import * as Animatable from 'react-native-animatable';
+import { AuthContext } from '../Context/UserContext';
 
 const SignIn = ({ navigation }) => {
   const [data, setData] = useState({
@@ -42,6 +43,11 @@ const SignIn = ({ navigation }) => {
       secureTextEntry: !data.secureTextEntry
     })
   }
+
+  // context data
+  const { loading, userInfo, login } = useContext(AuthContext);
+
+
   return (
 
     <View style={styles.main}>
@@ -93,7 +99,7 @@ const SignIn = ({ navigation }) => {
         </TouchableOpacity>
 
       </View>
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity onPress={()=>login(data.email,data.password)} style={styles.btn}>
         <Text style={styles.btnText}>SIGN IN</Text>
       </TouchableOpacity>
 
